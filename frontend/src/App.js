@@ -7,10 +7,13 @@ function App() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:4000/api/login", {
-        username: "admin",
-        password: "wrongPassword",
-      });
+      const response = await axios.post(
+        "http://game-of-requests-six.vercel.app/api/login",
+        {
+          username: "admin",
+          password: "wrongPassword",
+        }
+      );
       setMessage(response.data.message);
     } catch (error) {
       setMessage("Nice try, but not good enough!");
@@ -19,9 +22,12 @@ function App() {
 
   const fetchFlag = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/flag", {
-        headers: { "x-custom-header": "wrong-key" },
-      });
+      const response = await axios.get(
+        "http://game-of-requests-six.vercel.app/api/flag",
+        {
+          headers: { "x-custom-header": "wrong-key" },
+        }
+      );
       setFlag(response.data.flag);
     } catch (error) {
       setFlag("Oops! The flag is locked tight. Can you unlock it?");
