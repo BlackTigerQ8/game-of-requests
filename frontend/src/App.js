@@ -8,7 +8,7 @@ function App() {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "http://game-of-requests-six.vercel.app/api/login",
+        "https://game-of-requests-six.vercel.app/api/login",
         {
           username: "admin",
           password: "wrongPassword",
@@ -23,7 +23,7 @@ function App() {
   const fetchFlag = async () => {
     try {
       const response = await axios.get(
-        "http://game-of-requests-six.vercel.app/api/flag",
+        "https://game-of-requests-six.vercel.app/api/flag",
         {
           headers: { "x-custom-header": "wrong-key" },
         }
