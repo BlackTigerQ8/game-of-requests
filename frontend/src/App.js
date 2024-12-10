@@ -5,15 +5,14 @@ function App() {
   const [message, setMessage] = useState("");
   const [flag, setFlag] = useState("");
 
+  const REACT_APP_URL = "https://game-of-requests-six.vercel.app";
+
   const handleLogin = async () => {
     try {
-      const response = await axios.post(
-        "https://game-of-requests-six.vercel.app/api/login",
-        {
-          username: "admin",
-          password: "wrongPassword",
-        }
-      );
+      const response = await axios.post(`${REACT_APP_URL}/api/login`, {
+        username: "admin",
+        password: "wrongPassword",
+      });
       setMessage(response.data.message);
     } catch (error) {
       setMessage("Nice try, but not good enough!");
@@ -22,12 +21,9 @@ function App() {
 
   const fetchFlag = async () => {
     try {
-      const response = await axios.get(
-        "https://game-of-requests-six.vercel.app/api/flag",
-        {
-          headers: { "x-custom-header": "wrong-key" },
-        }
-      );
+      const response = await axios.get(`${REACT_APP_URL}/api/flag`, {
+        headers: { "x-custom-header": "wrong-key" },
+      });
       setFlag(response.data.flag);
     } catch (error) {
       setFlag("Oops! The flag is locked tight. Can you unlock it?");
