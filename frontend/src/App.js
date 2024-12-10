@@ -5,7 +5,7 @@ function App() {
   const [message, setMessage] = useState("");
   const [flag, setFlag] = useState("");
 
-  const REACT_APP_URL = "https://game-of-requests.onrender.com/";
+  const REACT_APP_URL = "https://game-of-requests.onrender.com";
 
   const handleLogin = async () => {
     try {
