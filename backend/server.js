@@ -28,13 +28,13 @@ app.post("/api/login", (req, res) => {
 });
 
 app.get("/api/part1", (req, res) => {
-  res.json({ part: "CODED{" }); // First part of the flag
+  res.json({ part1: "CODED{" }); // First part of the flag
 });
 
 app.get("/api/part2", (req, res) => {
   const headerValue = req.headers["x-part-key"];
   if (headerValue === "key123") {
-    res.json({ part: "a04wY2tfS24wQ2s=" }); // Second part of the flag
+    res.json({ part2: "a04wY2tfS24wQ2s=" }); // Second part of the flag
   } else {
     res.status(403).json({ error: "Forbidden" });
   }
@@ -43,7 +43,7 @@ app.get("/api/part2", (req, res) => {
 app.post("/api/part3", (req, res) => {
   const { secret } = req.body;
   if (secret === "unlock_the_door") {
-    res.json({ part: "_b3h!Nd" }); // Third part of the flag
+    res.json({ part3: "_b3h!Nd" }); // Third part of the flag
   } else {
     res.status(400).json({ error: "Incorrect payload" });
   }
@@ -52,7 +52,7 @@ app.post("/api/part3", (req, res) => {
 app.get("/api/part4", (req, res) => {
   const queryParam = req.query.key;
   if (queryParam === "door123") {
-    res.json({ part: "_tH3_d0oR}" }); // Fourth part of the flag
+    res.json({ part4: "_tH3_d0oR}" }); // Fourth part of the flag
   } else {
     res.status(403).json({ error: "Invalid query parameter" });
   }
