@@ -41,15 +41,10 @@ function App() {
       const response = await axios.get(`${REACT_APP_URL}/api/flag`, {
         headers: { "x-custom-header": "wrong-key" },
       });
-
-      if (response.data && response.data.flag) {
-        setFlag(response.data.flag);
-      } else {
-        setFlag("The flag couldn't be fetched.");
-      }
     } catch (error) {
-      setTeaser(teasers[Math.floor(Math.random() * teasers.length)]);
-      setFlag(teaser);
+      const randomTeaser = teasers[Math.floor(Math.random() * teasers.length)];
+      setTeaser(randomTeaser);
+      setFlag(randomTeaser);
     }
   };
 
