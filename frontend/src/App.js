@@ -4,8 +4,24 @@ import axios from "axios";
 function App() {
   const [message, setMessage] = useState("");
   const [flag, setFlag] = useState("");
+  const [emoji, setEmoji] = useState("");
+  const [teaser, setTeaser] = useState("");
 
   const REACT_APP_URL = "https://game-of-requests.onrender.com";
+
+  const emojis = ["😂", "🙃", "🎉", "🧐", "😏", "🤔", "💥", "🪄", "🎭", "🔥"];
+  const teasers = [
+    "Come on, you can do better!",
+    "Is that all you've got?",
+    "The flag is laughing at you!",
+    "Think harder!",
+    "Keep going, you're almost there!",
+    "Do you even hack, bro?",
+    "Nice try, but nope!",
+    "Try harder next time!",
+    "The flag is well-guarded!",
+    "Oops! Missed again!",
+  ];
 
   const handleLogin = async () => {
     try {
@@ -15,7 +31,8 @@ function App() {
       });
       setMessage(response.data.message);
     } catch (error) {
-      setMessage("Nice try, but not good enough!");
+      setEmoji(emojis[Math.floor(Math.random() * emojis.length)]);
+      setMessage("Nice try, but not good enough! " + emoji);
     }
   };
 
@@ -26,7 +43,8 @@ function App() {
       });
       setFlag(response.data.flag);
     } catch (error) {
-      setFlag("Oops! The flag is locked tight. Can you unlock it?");
+      setTeaser(teasers[Math.floor(Math.random() * teasers.length)]);
+      setFlag(teaser);
     }
   };
 
