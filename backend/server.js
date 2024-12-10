@@ -1,11 +1,24 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "x-part-key"],
+  })
+);
+
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+});
 
 // Decoy login route
 app.post("/api/login", (req, res) => {
@@ -49,6 +62,21 @@ app.get("/api/part4", (req, res) => {
     res.json({ part: "_tH3_d0oR}" }); // Fourth part of the flag
   } else {
     res.status(403).json({ error: "Invalid query parameter" });
+  }
+});
+
+app.post("/api/validate", (req, res) => {
+  const { part1, part2, part3, part4 } = req.body;
+
+  if (
+    part1 === "CODED{" &&
+    part2 === "a04wY2tfS24wQ2s=" &&
+    part3 === "_b3h!Nd" &&
+    part4 === "_tH3_d0oR}"
+  ) {
+    res.json({ flag: "CODED{a04wY2tfS24wQ2s=_b3h!Nd_tH3_d0oR}" });
+  } else {
+    res.status(400).json({ error: "Incorrect flag parts!" });
   }
 });
 
