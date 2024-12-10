@@ -14,13 +14,10 @@ app.use(
   })
 );
 
+// Serve static frontend files
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
-});
-
-// Decoy login route
+// API Routes
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
   if (username === "admin" && password === "securePassword123") {
@@ -30,12 +27,10 @@ app.post("/api/login", (req, res) => {
   }
 });
 
-// Part 1 of the flag
 app.get("/api/part1", (req, res) => {
   res.json({ part: "CODED{" }); // First part of the flag
 });
 
-// Part 2 of the flag: requires a specific header
 app.get("/api/part2", (req, res) => {
   const headerValue = req.headers["x-part-key"];
   if (headerValue === "key123") {
@@ -45,7 +40,6 @@ app.get("/api/part2", (req, res) => {
   }
 });
 
-// Part 3 of the flag: requires a POST request with specific data
 app.post("/api/part3", (req, res) => {
   const { secret } = req.body;
   if (secret === "unlock_the_door") {
@@ -55,7 +49,6 @@ app.post("/api/part3", (req, res) => {
   }
 });
 
-// Part 4 of the flag: requires a specific query parameter
 app.get("/api/part4", (req, res) => {
   const queryParam = req.query.key;
   if (queryParam === "door123") {
@@ -80,7 +73,12 @@ app.post("/api/validate", (req, res) => {
   }
 });
 
-// Catch-all route for decoys or invalid routes
+// Catch-all route for React app
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+});
+
+// Catch-all route for invalid requests
 app.all("*", (req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
