@@ -3,10 +3,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 4000;
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 // Decoy login route
 app.post("/api/login", (req, res) => {
@@ -59,6 +58,7 @@ app.all("*", (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on http://0.0.0.0:${PORT}`);
 });
