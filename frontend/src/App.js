@@ -37,12 +37,19 @@ function App() {
   };
 
   const fetchFlag = async () => {
+    setFlag("");
+    setTeaser("");
     try {
       const response = await axios.get(`${REACT_APP_URL}/api/flag`, {
         headers: { "x-custom-header": "wrong-key" },
       });
-      setFlag(response.data.flag);
+      if (response.data && response.data.flag) {
+        setFlag(response.data.flag);
+      } else {
+        setFlag("The flag couldn't be fetched.");
+      }
     } catch (error) {
+      // Always set a random teaser even if the request fails
       setTeaser(teasers[Math.floor(Math.random() * teasers.length)]);
       setFlag(teaser);
     }
@@ -121,7 +128,7 @@ function App() {
         onMouseLeave={() => setHoverFlag(false)}
         onClick={fetchFlag}
       >
-        Fetch Flag
+        Get Flag
       </button>
       <p style={paragraphStyle}>{flag}</p>
       <p style={teaserStyle}>
