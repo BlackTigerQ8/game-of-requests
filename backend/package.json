@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "body-parser": "^1.20.3",
-    "cloudinary": "^1.21.0",
     "cors": "^2.8.5",
     "express": "^4.21.2"
   },
-  "scripts": {
-    "start": "vercel dev"
-  },
   "devDependencies": {
     "nodemon": "^3.1.7"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "start:dev": "nodemon server.js"
   }
 }
