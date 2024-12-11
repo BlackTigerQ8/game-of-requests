@@ -6,6 +6,9 @@ function App() {
   const [flag, setFlag] = useState("");
   const [emoji, setEmoji] = useState("");
   const [teaser, setTeaser] = useState("");
+  const [loginClicked, setLoginClicked] = useState(false);
+  const [flagClicked, setFlagClicked] = useState(false);
+  const [teaserIndex, setTeaserIndex] = useState(0);
 
   const REACT_APP_URL = "https://game-of-requests.onrender.com";
 
@@ -21,6 +24,8 @@ function App() {
     "Try harder next time!",
     "The flag is well-guarded!",
     "Oops! Missed again!",
+    "THE FLAG IS SEPARATED INTO 4 PARTS",
+    "Hint: The flag is closer than you think!",
   ];
 
   const handleLogin = async () => {
@@ -34,6 +39,7 @@ function App() {
       setEmoji(emojis[Math.floor(Math.random() * emojis.length)]);
       setMessage("Nice try, but not good enough! " + emoji);
     }
+    setLoginClicked(true);
   };
 
   const fetchFlag = async () => {
@@ -41,13 +47,23 @@ function App() {
       const response = await axios.get(`${REACT_APP_URL}/api/flag`, {
         headers: { "x-custom-header": "wrong-key" },
       });
-      const randomTeaser = teasers[Math.floor(Math.random() * teasers.length)];
-      setTeaser(randomTeaser);
-      setFlag(randomTeaser);
+      if (teaserIndex < teasers.length) {
+        setTeaser(teasers[teaserIndex]);
+        setTeaserIndex(teaserIndex + 1);
+      } else {
+        setTeaser(teasers[0]);
+        setTeaserIndex(1);
+      }
+      setFlagClicked(true);
     } catch (error) {
-      const randomTeaser = teasers[Math.floor(Math.random() * teasers.length)];
-      setTeaser(randomTeaser);
-      setFlag(randomTeaser);
+      if (teaserIndex < teasers.length) {
+        setTeaser(teasers[teaserIndex]);
+        setTeaserIndex(teaserIndex + 1);
+      } else {
+        setTeaser(teasers[0]);
+        setTeaserIndex(1);
+      }
+      setFlagClicked(true);
     }
   };
 
@@ -115,7 +131,7 @@ function App() {
         onMouseLeave={() => setHoverLogin(false)}
         onClick={handleLogin}
       >
-        Try Login
+        {loginClicked ? "Keep Trying ..." : "Try Login"}
       </button>
       <p style={paragraphStyle}>{message}</p>
       <button
@@ -124,12 +140,10 @@ function App() {
         onMouseLeave={() => setHoverFlag(false)}
         onClick={fetchFlag}
       >
-        Get Flag
+        {flagClicked ? "Keep clicking..." : "Get Flag"}
       </button>
       <p style={paragraphStyle}>{flag}</p>
-      <p style={teaserStyle}>
-        {/* Hint: Sometimes, the answer lies in places you haven’t looked yet. */}
-      </p>
+      <p style={teaserStyle}>{teaser}</p>
     </div>
   );
 }
