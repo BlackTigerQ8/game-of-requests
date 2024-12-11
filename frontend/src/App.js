@@ -41,6 +41,9 @@ function App() {
       const response = await axios.get(`${REACT_APP_URL}/api/flag`, {
         headers: { "x-custom-header": "wrong-key" },
       });
+      const randomTeaser = teasers[Math.floor(Math.random() * teasers.length)];
+      setTeaser(randomTeaser);
+      setFlag(randomTeaser);
     } catch (error) {
       const randomTeaser = teasers[Math.floor(Math.random() * teasers.length)];
       setTeaser(randomTeaser);
